@@ -161,7 +161,8 @@ src/
 ## 🎨 Features Showcase
 
 ### Dashboard View
-![Dashboard](https://via.placeholder.com/1200x800/1e293b/ffffff?text=Weather+Dashboard+View)
+![Dashboard]<img width="1920" height="3012" alt="dashboard" src="https://github.com/user-attachments/assets/98f47924-b011-4e31-a3de-e01483c5e530" />
+()
 
 ### City Details
 ![City Page](https://via.placeholder.com/1200x800/1e293b/ffffff?text=City+Weather+Details)
