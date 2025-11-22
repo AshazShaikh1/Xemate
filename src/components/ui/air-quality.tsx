@@ -46,38 +46,43 @@ const AirQuality = ({ data, locationName }: AirQualityProps) => {
   const prominentPollutants = pollutants.slice(0, 4);
 
   return (
-    <Card className="flex-1">
+    <Card className="flex-1 hover-lift group">
       <CardHeader className="border-b">
-        <CardTitle>Air Quality Index (AQI) for {locationName}</CardTitle>
+        <CardTitle className="animate-fade-in">Air Quality Index (AQI) for {locationName}</CardTitle>
       </CardHeader>
-      <CardContent className="pt-6">
+      <CardContent className="pt-6 animate-fade-in">
         <div className="flex flex-col gap-6">
           {/* AQI Indicator and Description */}
-          <div className="flex flex-col gap-4 p-4 rounded-lg border border-dashed">
+          <div className="flex flex-col gap-4 p-4 rounded-lg border border-dashed transition-all duration-300 hover:border-solid hover:shadow-lg hover:scale-[1.02] group/item interactive-scale">
             <div className="flex items-center gap-4">
               {/* Colored circle with the AQI number */}
-              <div className={cn("size-12 rounded-full border flex items-center justify-center font-bold text-xl text-white", aqiInfo.color.replace('text-', 'bg-').replace('/10', '').replace('border-', ''))}>
-                {aqiIndex}
+              <div className={cn("size-12 rounded-full border flex items-center justify-center font-bold text-xl text-white transition-all duration-300 group-hover/item:scale-125 group-hover/item:rotate-12 group-hover/item:shadow-lg relative", aqiInfo.color.replace('text-', 'bg-').replace('/10', '').replace('border-', ''))}>
+                <span className="relative z-10">{aqiIndex}</span>
+                <div className={cn("absolute inset-0 rounded-full blur-xl opacity-0 group-hover/item:opacity-50 transition-opacity duration-300 animate-glow-pulse", aqiInfo.color.replace('text-', 'bg-').replace('/10', '').replace('border-', ''))} />
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">OpenWeather AQI Scale (1-5)</p>
                 {/* Colored AQI name */}
-                <h2 className={cn("text-2xl font-bold", aqiInfo.color)}>{aqiInfo.name}</h2>
+                <h2 className={cn("text-2xl font-bold transition-all duration-300 group-hover/item:scale-105", aqiInfo.color)}>{aqiInfo.name}</h2>
               </div>
             </div>
             {/* Detailed description */}
-            <p className="text-sm text-muted-foreground">{aqiInfo.description}</p>
+            <p className="text-sm text-muted-foreground transition-colors group-hover/item:text-foreground/80">{aqiInfo.description}</p>
           </div>
 
           {/* Pollutant Details */}
-          <h3 className="text-lg font-semibold border-b pb-2">Key Pollutant Concentrations</h3>
+          <h3 className="text-lg font-semibold border-b pb-2 animate-fade-in">Key Pollutant Concentrations</h3>
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
             {prominentPollutants.length > 0 ? (
-                prominentPollutants.map((pollutant) => (
-                    <div key={pollutant.name} className="flex flex-col items-start rounded-lg border p-3 bg-secondary/30">
-                        <p className="text-xs font-medium text-muted-foreground truncate">{pollutant.description}</p>
-                        <p className="text-xl font-semibold">{pollutant.value.toFixed(2)}</p>
-                        <p className="text-xs font-semibold text-muted-foreground">{pollutant.name} ({pollutant.unit})</p>
+                prominentPollutants.map((pollutant, index) => (
+                    <div 
+                      key={pollutant.name} 
+                      className="flex flex-col items-start rounded-lg border p-3 bg-secondary/30 hover:bg-secondary/50 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:border-primary/20 border-transparent animate-fade-in group/pollutant interactive-scale cursor-pointer"
+                      style={{ animationDelay: `${index * 100}ms` }}
+                    >
+                        <p className="text-xs font-medium text-muted-foreground truncate group-hover/pollutant:text-foreground transition-colors">{pollutant.description}</p>
+                        <p className="text-xl font-semibold transition-all duration-300 group-hover/pollutant:scale-125 group-hover/pollutant:text-primary">{pollutant.value.toFixed(2)}</p>
+                        <p className="text-xs font-semibold text-muted-foreground transition-colors group-hover/pollutant:text-foreground">{pollutant.name} ({pollutant.unit})</p>
                     </div>
                 ))
             ) : (

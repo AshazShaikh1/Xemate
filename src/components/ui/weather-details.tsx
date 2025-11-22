@@ -76,22 +76,26 @@ const WeatherDetails = ({ data }: WeatherDetailsProps) => {
   ].filter(d => d.value !== undefined);
 
   return (
-    <Card className="flex-1">
+    <Card className="flex-1 hover-lift group">
       <CardHeader className="border-b">
-        <CardTitle>Additional Details</CardTitle> 
+        <CardTitle className="animate-fade-in">Additional Details</CardTitle> 
       </CardHeader>
       <CardContent className="pt-6">
         <div className="grid gap-4 sm:grid-cols-2">
-          {details.map((detail) => {
+          {details.map((detail, index) => {
             return (
               <div
               key={detail.title}
-              className="flex items-center gap-4 p-3 rounded-lg bg-secondary/30"
+              className="flex items-center gap-4 p-3 rounded-lg bg-secondary/30 hover:bg-secondary/50 transition-all duration-300 hover:scale-110 hover:shadow-lg hover:border-primary/20 border border-transparent animate-fade-in group/item interactive-scale cursor-pointer"
+              style={{ animationDelay: `${index * 100}ms` }}
               >
-                <detail.icon className={`h-5 w-5 shrink-0 ${detail.color}`} />
-                <div>
-                  <p className="text-sm font-medium leading-none">{detail.title}</p>
-                  <p className="text-lg font-semibold text-foreground">{detail.value}</p> 
+                <div className="relative">
+                  <detail.icon className={`h-5 w-5 shrink-0 ${detail.color} transition-all duration-300 group-hover/item:scale-125 group-hover/item:rotate-12 group-hover/item:drop-shadow-lg`} />
+                  <div className={`absolute inset-0 ${detail.color.replace('text-', 'bg-')} rounded-full blur-md opacity-0 group-hover/item:opacity-30 transition-opacity duration-300`} />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium leading-none text-muted-foreground group-hover/item:text-foreground transition-colors">{detail.title}</p>
+                  <p className="text-lg font-semibold text-foreground transition-all group-hover/item:scale-110 group-hover/item:translate-x-1">{detail.value}</p> 
                 </div>
               </div>
             );

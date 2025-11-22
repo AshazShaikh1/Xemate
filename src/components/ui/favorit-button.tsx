@@ -43,9 +43,13 @@ const FavoriteButton = ({ data }: FavoriteButtonProps) => {
       onClick={handleToggleFavorite}
       variant={isCurrentlyFavorite ? "default" : "outline"}
       size={"icon"}
-      className={isCurrentlyFavorite ? "bg-yellow-500 hover:bg-yellow-600" : ""}
+      className={`transition-all duration-300 hover:scale-110 ripple interactive-glow ${
+        isCurrentlyFavorite 
+          ? "bg-yellow-500 hover:bg-yellow-600 hover:shadow-lg hover:shadow-yellow-500/50 animate-pulse-glow" 
+          : "hover:bg-yellow-500/10 hover:border-yellow-500/30"
+      }`}
     >
-      <Star className={`h-4 w-4 ${isCurrentlyFavorite ? "fill-current" : ""} cursor-pointer`} />
+      <Star className={`h-4 w-4 transition-all duration-300 ${isCurrentlyFavorite ? "fill-current animate-scale-in" : ""} cursor-pointer hover:rotate-12 hover:scale-125 group-hover/btn:animate-wiggle`} />
     </Button>
   )
 }

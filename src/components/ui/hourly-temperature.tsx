@@ -18,13 +18,13 @@ const HourlyTemperature = ({ data }: HourlyTemperatureProps) => {
   }))
 
   return (
-    <Card className="w-full lg:w-2/5"> 
+    <Card className="w-full h-full hover-lift group animate-breathe"> 
       <CardHeader className="border-b">
-        <CardTitle>Hourly Temperature</CardTitle> 
+        <CardTitle className="animate-fade-in group-hover:scale-105 transition-transform duration-300">Hourly Temperature</CardTitle> 
       </CardHeader>
-      <CardContent className="h-[250px] w-full pt-6"> 
+      <CardContent className="h-[250px] w-full pt-6 group-hover:scale-[1.02] transition-transform duration-300"> 
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={chartData}>
+            <LineChart data={chartData} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
               <XAxis
                 dataKey="time"
                 stroke="var(--color-muted-foreground)" 

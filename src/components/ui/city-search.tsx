@@ -45,11 +45,11 @@ const CitySearch = () => {
     <>
       <Button
         variant="outline"
-        className="relative w-full justify-start text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64"
+        className="relative w-full justify-start text-sm text-muted-foreground sm:pr-12 md:w-40 lg:w-64 transition-all duration-300 hover:scale-105 hover:border-primary/30 hover:bg-accent/50 hover:shadow-md interactive-scale group/search"
         onClick={() => setOpen(true)}
       >
-        <Search className="mr-2 h-4" />
-        Search Cities..
+        <Search className="mr-2 h-4 transition-all duration-300 group-hover/search:scale-125 group-hover/search:rotate-12 group-hover/search:text-primary" />
+        <span className="transition-colors group-hover/search:text-foreground">Search Cities..</span>
       </Button>
 
       <CommandDialog open={open} onOpenChange={setOpen}>

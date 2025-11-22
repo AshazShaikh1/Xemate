@@ -98,46 +98,76 @@ const WeatherDashboard = () => {
   const isFetching = weatherQuery.isFetching || forecastQuery.isFetching || aqiQuery.isFetching || historicalQuery.isFetching;
 
   return (
-    <div className="space-y-6"> 
-      <FavoriteCities /> 
-      
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-extrabold tracking-tight">Your Weather Dashboard</h1>
-        <Button variant={'outline'}
+    <div className="space-y-4 sm:space-y-6 animate-fade-in"> 
+      {/* Header Section */}
+      <div className="flex items-center justify-between flex-wrap gap-4 animate-fade-in animate-delay-100">
+        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+          Your Weather Dashboard
+        </h1>
+        <Button 
+          variant={'outline'}
           size={'icon'}
           onClick={handleRefresh}
           disabled={isFetching}
-          className="h-9 w-9" 
+          className="h-9 w-9 transition-all duration-300 hover:scale-110 hover:bg-primary/10 hover:border-primary/30 hover:shadow-md interactive-scale ripple group/refresh" 
         >
-          <RefreshCw className={`h-4 w-4 ${isFetching ? "animate-spin" : ""}`} />
+          <RefreshCw className={`h-4 w-4 transition-all duration-300 ${isFetching ? "animate-spin" : "group-hover/refresh:rotate-180"} group-hover/refresh:scale-110`} />
         </Button>
       </div>
 
-      <div className="grid gap-6">
+      {/* Favorite Cities */}
+      <div className="animate-fade-in">
+        <FavoriteCities /> 
+      </div>
+
+      {/* Hero Section - Current Weather Large */}
+      <div className="animate-fade-in animate-delay-200">
+        <CurrentWeather data={weatherQuery.data} locationName={locationName} />
+      </div>
+
+      {/* Dynamic Grid Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 animate-fade-in animate-delay-300">
         
-        <div className="flex flex-col lg:flex-row gap-6"> 
-          <CurrentWeather data={weatherQuery.data} locationName={locationName} />
+        {/* Left Column - Hourly Chart (spans 7 columns) */}
+        <div className="lg:col-span-7 animate-fade-in animate-delay-400">
           <HourlyTemperature data={forecastQuery.data} />
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3 items-start"> 
-          <div className="lg:col-span-2 space-y-6">
-            <WeatherForecast data={forecastQuery.data} />
-            
-            {/* Stacked Historical Chart and AQI */}
-            {historicalQuery.isLoading ? (
-              <Skeleton className="h-[300px] w-full rounded-xl" />
-            ) : (
-              historicalQuery.data && historicalQuery.data.length > 0 && (
-                <HistoricalChart data={historicalQuery.data} />
-              )
-            )}
-            {aqiQuery.data && <AirQuality data={aqiQuery.data} locationName={aqiLocationName} />}
-          </div>
+        {/* Right Column - Weather Details (spans 5 columns) */}
+        <div className="lg:col-span-5 animate-fade-in animate-delay-500">
           <WeatherDetails data={weatherQuery.data} />
         </div>
 
       </div>
+
+      {/* Bottom Section - Forecast and Analytics */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 animate-fade-in animate-delay-400">
+        
+        {/* Forecast Section (spans 7 columns) */}
+        <div className="lg:col-span-7 space-y-4 sm:space-y-6">
+          <WeatherForecast data={forecastQuery.data} />
+          
+          {/* Historical Chart */}
+          {historicalQuery.isLoading ? (
+            <Skeleton className="h-[300px] w-full rounded-xl animate-pulse" />
+          ) : (
+            historicalQuery.data && historicalQuery.data.length > 0 && (
+              <div className="animate-fade-in animate-delay-600">
+                <HistoricalChart data={historicalQuery.data} />
+              </div>
+            )
+          )}
+        </div>
+
+        {/* Right Column - Air Quality (spans 5 columns) */}
+        <div className="lg:col-span-5 animate-fade-in animate-delay-500">
+          {aqiQuery.data && (
+            <AirQuality data={aqiQuery.data} locationName={aqiLocationName} />
+          )}
+        </div>
+
+      </div>
+
     </div>
   )
 }

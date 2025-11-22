@@ -46,42 +46,65 @@ const CityPage = () => {
   const aqiLocationName = `${cityName}, ${weatherQuery.data.sys.country}`;
 
   return (
-    <div className="space-y-6"> 
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-extrabold tracking-tight">{cityName}, {weatherQuery.data.sys.country}</h1>
-        <div className="flex items-center gap-2">
+    <div className="space-y-4 sm:space-y-6 animate-fade-in"> 
+      {/* Header Section */}
+      <div className="flex items-center justify-between flex-wrap gap-4 animate-fade-in">
+        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+          {cityName}, {weatherQuery.data.sys.country}
+        </h1>
+        <div className="flex items-center gap-2 animate-fade-in animate-delay-100">
             <FavoriteButton data={{...weatherQuery.data, name: params.cityName }} />
         </div>
       </div>
 
-      <div className="grid gap-6">
+      {/* Hero Section - Current Weather Large */}
+      <div className="animate-fade-in animate-delay-200">
+        <CurrentWeather data={weatherQuery.data} />
+      </div>
+
+      {/* Dynamic Grid Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 animate-fade-in animate-delay-300">
         
-        <div className="flex flex-col lg:flex-row gap-6"> 
-          <CurrentWeather data={weatherQuery.data} />
+        {/* Left Column - Hourly Chart (spans 7 columns) */}
+        <div className="lg:col-span-7 animate-fade-in animate-delay-400">
           <HourlyTemperature data={forecastQuery.data} />
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3 items-start"> 
-          <div className="lg:col-span-2 space-y-6">
-            <WeatherForecast data={forecastQuery.data} />
-            
-            {/* Stacked Historical Chart and AQI for better visibility */}
-            {historicalQuery.isLoading ? (
-              <Skeleton className="h-[300px] w-full rounded-xl" />
-            ) : (
-              historicalQuery.data && historicalQuery.data.length > 0 && (
-                <HistoricalChart data={historicalQuery.data} />
-              )
-            )}
-            
-            {aqiQuery.data && (
-              <AirQuality data={aqiQuery.data} locationName={aqiLocationName} />
-            )}
-          </div>
+        {/* Right Column - Weather Details (spans 5 columns) */}
+        <div className="lg:col-span-5 animate-fade-in animate-delay-500">
           <WeatherDetails data={weatherQuery.data} />
         </div>
 
       </div>
+
+      {/* Bottom Section - Forecast and Analytics */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 animate-fade-in animate-delay-400">
+        
+        {/* Forecast Section (spans 7 columns) */}
+        <div className="lg:col-span-7 space-y-4 sm:space-y-6">
+          <WeatherForecast data={forecastQuery.data} />
+          
+          {/* Historical Chart */}
+          {historicalQuery.isLoading ? (
+            <Skeleton className="h-[300px] w-full rounded-xl animate-pulse" />
+          ) : (
+            historicalQuery.data && historicalQuery.data.length > 0 && (
+              <div className="animate-fade-in animate-delay-600">
+                <HistoricalChart data={historicalQuery.data} />
+              </div>
+            )
+          )}
+        </div>
+
+        {/* Right Column - Air Quality (spans 5 columns) */}
+        <div className="lg:col-span-5 animate-fade-in animate-delay-500">
+          {aqiQuery.data && (
+            <AirQuality data={aqiQuery.data} locationName={aqiLocationName} />
+          )}
+        </div>
+
+      </div>
+
     </div>
   );
 };

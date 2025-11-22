@@ -20,11 +20,11 @@ const HistoricalChart = ({ data }: HistoricalChartProps) => {
   const formatValue = (value: number) => `${value}${unitSymbol}`;
 
   return (
-    <Card className="flex-1">
+    <Card className="flex-1 hover-lift group animate-breathe">
       <CardHeader className="border-b">
-        <CardTitle>7-Day Historical Temperatures</CardTitle>
+        <CardTitle className="animate-fade-in group-hover:scale-105 transition-transform duration-300">7-Day Historical Temperatures</CardTitle>
       </CardHeader>
-      <CardContent className="h-[250px] w-full pt-6">
+      <CardContent className="h-[250px] w-full pt-6 group-hover:scale-[1.02] transition-transform duration-300">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData} margin={{ top: 5, right: 0, left: -20, bottom: 5 }}>
             <XAxis
