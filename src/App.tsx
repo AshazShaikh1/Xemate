@@ -1,12 +1,12 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
-import Layout from "./components/layout"
-import { ThemeProvider } from "./context/theme-provider"
-import WeatherDashboard from "./pages/weather-dashboard"
-import CityPage from "./pages/city"
-import { QueryClientProvider, QueryClient } from "@tanstack/react-query"
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { Toaster } from "sonner"
-import { UnitProvider } from "./context/unit-provider" //
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Layout from "./components/layout";
+import { ThemeProvider } from "./context/theme-provider";
+import WeatherDashboard from "./pages/weather-dashboard";
+import CityPage from "./pages/city";
+import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "sonner";
+import { UnitProvider } from "./context/unit-provider";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,20 +24,20 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <ThemeProvider defaultTheme="dark">
-          <UnitProvider> {/* Added UnitProvider wrapper */}
+          <UnitProvider>
             <Layout>
               <Routes>
-                <Route path='/' element={<WeatherDashboard />} />
-                <Route path='/city/:cityName' element={<CityPage />} />
+                <Route path="/" element={<WeatherDashboard />} />
+                <Route path="/city/:cityName" element={<CityPage />} />
               </Routes>
             </Layout>
             <Toaster richColors />
-          </UnitProvider> {/* Added UnitProvider wrapper */}
+          </UnitProvider>
         </ThemeProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
-  )
-}
+  );
+};
 
 export default App

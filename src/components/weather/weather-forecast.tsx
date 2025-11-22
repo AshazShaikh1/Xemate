@@ -1,9 +1,9 @@
 import type { ForecastData } from "@/api/types";
 import { format } from "date-fns";
-import { Card, CardContent, CardHeader, CardTitle } from "./card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useUnit } from "@/context/unit-provider"; // New import
+import { useUnit } from "@/context/unit-provider";
 
 interface WeatherForecastProps {
   data: ForecastData;
@@ -24,11 +24,12 @@ interface DailyForecast {
 }
 
 const WeatherForecast = ({ data }: WeatherForecastProps) => {
-  const { unitSymbol } = useUnit(); // Get unitSymbol
+  const { unitSymbol } = useUnit();
 
-  const dailyForcasts = data.list.reduce((acc, forecast) => {
-    // Exclude the current day's first entry from the forecast summary
-    const isToday = format(new Date(forecast.dt * 1000), "yyyy-MM-dd") === format(new Date(), "yyyy-MM-dd");
+  const dailyForecasts = data.list.reduce((acc, forecast) => {
+    const isToday =
+      format(new Date(forecast.dt * 1000), "yyyy-MM-dd") ===
+      format(new Date(), "yyyy-MM-dd");
     if (isToday) return acc;
 
     const date = format(new Date(forecast.dt * 1000), "yyyy-MM-dd");
@@ -50,10 +51,9 @@ const WeatherForecast = ({ data }: WeatherForecastProps) => {
     return acc;
   }, {} as Record<string, DailyForecast>);
 
-  // Take the next 5 days
-  const nextDays = Object.values(dailyForcasts).slice(0, 5);
-  
-  const formatTemp = (temp: number) => `${Math.round(temp)}${unitSymbol}` // Use dynamic unitSymbol
+  const nextDays = Object.values(dailyForecasts).slice(0, 5);
+
+  const formatTemp = (temp: number) => `${Math.round(temp)}${unitSymbol}`;
 
   return (
     <Card className="flex-1 hover-lift group">
@@ -68,17 +68,19 @@ const WeatherForecast = ({ data }: WeatherForecastProps) => {
               <div
                 key={day.date}
                 className={cn(
-                    "flex items-center justify-between rounded-lg p-3 transition-all duration-300 hover:bg-secondary/50 bg-secondary/30 hover:scale-[1.03] hover:shadow-lg hover:border-primary/20 border border-transparent group/forecast interactive-scale cursor-pointer"
+                  "flex items-center justify-between rounded-lg p-3 transition-all duration-300 hover:bg-secondary/50 bg-secondary/30 hover:scale-[1.03] hover:shadow-lg hover:border-primary/20 border border-transparent group/forecast interactive-scale cursor-pointer"
                 )}
                 style={{ animationDelay: `${(index + 1) * 100}ms` }}
               >
-                {/* Day and Date */}
                 <div className="shrink-0 w-[120px]">
-                  <p className="font-medium transition-colors group-hover:text-primary">{format(dateObj, "EEE")}</p>
-                  <p className="text-sm text-muted-foreground">{format(dateObj, "MMM d")}</p>
+                  <p className="font-medium transition-colors group-hover/forecast:text-primary">
+                    {format(dateObj, "EEE")}
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    {format(dateObj, "MMM d")}
+                  </p>
                 </div>
 
-                {/* Weather Icon and Description */}
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                   <div className="relative">
                     <img
@@ -93,19 +95,18 @@ const WeatherForecast = ({ data }: WeatherForecastProps) => {
                   </p>
                 </div>
 
-                {/* Min/Max Temperature */}
                 <div className="flex justify-end gap-3 shrink-0 w-[120px]">
                   <span className="flex items-center text-blue-500 text-sm font-medium bg-blue-500/10 px-2 py-1 rounded-md transition-all hover:bg-blue-500/20 hover:scale-110 hover:shadow-md hover:shadow-blue-500/30 group-hover/forecast:scale-110">
                     <ArrowDown className="mr-1 h-3 w-3 transition-transform duration-300 group-hover/forecast:translate-y-0.5" />
-                    {formatTemp (day.temp_min)}
+                    {formatTemp(day.temp_min)}
                   </span>
                   <span className="flex items-center text-red-500 text-sm font-medium bg-red-500/10 px-2 py-1 rounded-md transition-all hover:bg-red-500/20 hover:scale-110 hover:shadow-md hover:shadow-red-500/30 group-hover/forecast:scale-110">
                     <ArrowUp className="mr-1 h-3 w-3 transition-transform duration-300 group-hover/forecast:-translate-y-0.5" />
-                    {formatTemp (day.temp_max)}
+                    {formatTemp(day.temp_max)}
                   </span>
                 </div>
               </div>
-            )
+            );
           })}
         </div>
       </CardContent>
@@ -114,3 +115,4 @@ const WeatherForecast = ({ data }: WeatherForecastProps) => {
 };
 
 export default WeatherForecast;
+

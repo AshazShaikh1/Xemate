@@ -2,10 +2,10 @@ import { useFavorite } from "@/hooks/use-favorite";
 import { useWeatherQuery } from "@/hooks/use-weather";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { useNavigate } from "react-router-dom";
-import { Button } from "./button";
+import { Button } from "@/components/ui/button";
 import { Loader2, X } from "lucide-react";
 import { toast } from "sonner";
-import { Card } from "./card"; // Import Card
+import { Card } from "@/components/ui/card";
 
 interface FavoriteCityTabletProps {
   id: string;
@@ -15,8 +15,7 @@ interface FavoriteCityTabletProps {
   onRemove: (id: string) => void;
 }
 
-// Renamed to use PascalCase for component name
-const FavoriteCities = () => { 
+const FavoriteCities = () => {
   const { favorites, removeFavorite } = useFavorite();
 
   if (!favorites || favorites.length === 0) {
@@ -25,26 +24,25 @@ const FavoriteCities = () => {
 
   return (
     <Card className="p-0 hover-lift group">
-        <h1 className="text-xl font-bold tracking-tight px-6 pt-6 border-b pb-4 animate-fade-in">Favorite Cities</h1>
-        {/* Use the shadcn ScrollArea component imported as ScrollArea */}
-        <ScrollArea className="w-full pb-4">
-            <div className="flex gap-4 p-6 overflow-x-auto">
-            {favorites.map((city, index) => {
-                return (
-                <div
-                  key={city.id}
-                  className="animate-fade-in"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <FavoriteCityTablet
-                    {...city}
-                    onRemove={() => removeFavorite.mutate(city.id)}
-                  />
-                </div>
-                );
-            })}
+      <h1 className="text-xl font-bold tracking-tight px-6 pt-6 border-b pb-4 animate-fade-in">
+        Favorite Cities
+      </h1>
+      <ScrollArea className="w-full pb-4">
+        <div className="flex gap-4 p-6 overflow-x-auto">
+          {favorites.map((city, index) => (
+            <div
+              key={city.id}
+              className="animate-fade-in"
+              style={{ animationDelay: `${index * 100}ms` }}
+            >
+              <FavoriteCityTablet
+                {...city}
+                onRemove={() => removeFavorite.mutate(city.id)}
+              />
             </div>
-        </ScrollArea>
+          ))}
+        </div>
+      </ScrollArea>
     </Card>
   );
 };
@@ -86,23 +84,27 @@ function FavoriteCityTablet({
       ) : weather ? (
         <>
           <div className="flex items-center gap-2">
-          <div className="relative">
-            <img
-              src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
-              alt={weather.weather[0].description}
-              className="h-8 w-8 transition-all duration-300 group-hover/item:scale-125 group-hover/item:rotate-12 group-hover/item:drop-shadow-lg z-10 relative"
-            />
-            <div className="absolute inset-0 bg-primary/10 rounded-full blur-md opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 animate-glow-pulse" />
-          </div>
+            <div className="relative">
+              <img
+                src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                alt={weather.weather[0].description}
+                className="h-8 w-8 transition-all duration-300 group-hover/item:scale-125 group-hover/item:rotate-12 group-hover/item:drop-shadow-lg z-10 relative"
+              />
+              <div className="absolute inset-0 bg-primary/10 rounded-full blur-md opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 animate-glow-pulse" />
+            </div>
           </div>
 
           <div className="flex-1 min-w-0">
-            <p className="font-medium transition-colors group-hover/item:text-primary truncate">{name}</p>
+            <p className="font-medium transition-colors group-hover/item:text-primary truncate">
+              {name}
+            </p>
             <p className="text-xs text-muted-foreground">{weather.sys.country}</p>
           </div>
 
           <div className="ml-auto text-right z-10 relative">
-            <p className="text-xl font-bold transition-all duration-300 group-hover/item:scale-125 group-hover/item:text-primary">{Math.round(weather.main.temp)}°</p>
+            <p className="text-xl font-bold transition-all duration-300 group-hover/item:scale-125 group-hover/item:text-primary">
+              {Math.round(weather.main.temp)}°
+            </p>
             <p className="text-xs capitalize text-muted-foreground truncate max-w-[100px] transition-colors group-hover/item:text-foreground">
               {weather.weather[0].description}
             </p>
@@ -114,3 +116,4 @@ function FavoriteCityTablet({
 }
 
 export default FavoriteCities;
+

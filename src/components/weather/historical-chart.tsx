@@ -1,6 +1,14 @@
-import { Card, CardContent, CardHeader, CardTitle } from "./card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { format } from "date-fns";
-import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis, Legend } from "recharts";
+import {
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+  Legend,
+} from "recharts";
 import { useUnit } from "@/context/unit-provider";
 import type { HistoricalData } from "@/hooks/use-weather";
 
@@ -22,11 +30,16 @@ const HistoricalChart = ({ data }: HistoricalChartProps) => {
   return (
     <Card className="flex-1 hover-lift group animate-breathe">
       <CardHeader className="border-b">
-        <CardTitle className="animate-fade-in group-hover:scale-105 transition-transform duration-300">7-Day Historical Temperatures</CardTitle>
+        <CardTitle className="animate-fade-in group-hover:scale-105 transition-transform duration-300">
+          7-Day Historical Temperatures
+        </CardTitle>
       </CardHeader>
       <CardContent className="h-[250px] w-full pt-6 group-hover:scale-[1.02] transition-transform duration-300">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={chartData} margin={{ top: 5, right: 0, left: -20, bottom: 5 }}>
+          <LineChart
+            data={chartData}
+            margin={{ top: 5, right: 0, left: -20, bottom: 5 }}
+          >
             <XAxis
               dataKey="date"
               stroke="var(--color-muted-foreground)"
@@ -46,11 +59,15 @@ const HistoricalChart = ({ data }: HistoricalChartProps) => {
                 if (active && payload && payload.length) {
                   return (
                     <div className="rounded-lg border bg-popover text-popover-foreground p-3 shadow-lg flex flex-col gap-1">
-                      <span className="text-sm font-semibold">{payload[0].payload.date}</span>
+                      <span className="text-sm font-semibold">
+                        {payload[0].payload.date}
+                      </span>
                       {payload.map((p) => (
                         <div key={p.dataKey} className="text-xs">
                           <span style={{ color: p.color }}>{p.name}: </span>
-                          <span className="font-bold">{formatValue(p.value as number)}</span>
+                          <span className="font-bold">
+                            {formatValue(p.value as number)}
+                          </span>
                         </div>
                       ))}
                     </div>
@@ -64,7 +81,7 @@ const HistoricalChart = ({ data }: HistoricalChartProps) => {
               type="monotone"
               dataKey="max"
               name="Max Temp"
-              stroke="var(--color-chart-4)" // Reddish color
+              stroke="var(--color-chart-4)"
               strokeWidth={2}
               dot={false}
             />
@@ -72,7 +89,7 @@ const HistoricalChart = ({ data }: HistoricalChartProps) => {
               type="monotone"
               dataKey="min"
               name="Min Temp"
-              stroke="var(--color-chart-2)" // Bluish color
+              stroke="var(--color-chart-2)"
               strokeWidth={2}
               dot={false}
             />
@@ -84,3 +101,4 @@ const HistoricalChart = ({ data }: HistoricalChartProps) => {
 };
 
 export default HistoricalChart;
+

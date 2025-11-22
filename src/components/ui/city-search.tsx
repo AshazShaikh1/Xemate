@@ -24,7 +24,6 @@ const CitySearch = () => {
   const { data: locations, isLoading } = useLocationSearch(query);
   const { history = [], clearHistory, addToHistory } = useSearchHistory();
 
-  // accept the value param that cmdk will pass
   const handleSelect = (cityData: string) => {
     const [lat, lon, name, country] = cityData.split("|");
 
