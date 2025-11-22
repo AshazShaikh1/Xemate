@@ -7,9 +7,11 @@ import HourlyTemperature from "@/components/ui/hourly-temperature"
 import AirQuality from "@/components/ui/air-quality"
 import WeatherDetails from "@/components/ui/weather-details"
 import WeatherForecast from "@/components/ui/weather-forecast"
+import HistoricalChart from "@/components/ui/historical-chart"
 import { useGeolocation } from "@/hooks/use-geoloaction"
-import { useAqiQuery, useForecastQuery, useReverseGeocodeQuery, useWeatherQuery } from "@/hooks/use-weather"
+import { useAqiQuery, useForecastQuery, useHistoricalWeatherQuery, useReverseGeocodeQuery, useWeatherQuery } from "@/hooks/use-weather"
 import { AlertTriangle, MapPin, RefreshCw } from "lucide-react"
+import { Skeleton } from "@/components/ui/skeleton"
 
 const WeatherDashboard = () => {
   const { coordinates,
@@ -22,6 +24,7 @@ const WeatherDashboard = () => {
   const forecastQuery = useForecastQuery(coordinates)
   const locationQuery = useReverseGeocodeQuery(coordinates)
   const aqiQuery = useAqiQuery(coordinates)
+  const historicalQuery = useHistoricalWeatherQuery(coordinates)
 
   const handleRefresh = () => {
     getLocation()
@@ -30,6 +33,7 @@ const WeatherDashboard = () => {
       forecastQuery.refetch()
       locationQuery.refetch()
       aqiQuery.refetch()
+      historicalQuery.refetch()
     }
   }
 
@@ -71,7 +75,7 @@ const WeatherDashboard = () => {
   const locationName = locationQuery.data?.[0]
   const aqiLocationName = locationName ? `${locationName.name}${locationName.state ? `, ${locationName.state}` : ''}, ${locationName.country}` : 'Your Current Location';
 
-  if (weatherQuery.error || forecastQuery.error || aqiQuery.error) {
+  if (weatherQuery.error || forecastQuery.error || aqiQuery.error || historicalQuery.error) {
     return (
       <Alert variant="destructive">
         <AlertTriangle className="h-4 w-4" />
@@ -87,12 +91,11 @@ const WeatherDashboard = () => {
     )
   }
 
-  // Use a logical check for data presence, but allow fetching state to return the skeleton
   if (!weatherQuery.data || !forecastQuery.data) {
      return <WeatherSkeleton />
   }
   
-  const isFetching = weatherQuery.isFetching || forecastQuery.isFetching || aqiQuery.isFetching;
+  const isFetching = weatherQuery.isFetching || forecastQuery.isFetching || aqiQuery.isFetching || historicalQuery.isFetching;
 
   return (
     <div className="space-y-6"> 
@@ -112,16 +115,23 @@ const WeatherDashboard = () => {
 
       <div className="grid gap-6">
         
-        {/* Row 1: Current Weather (3/5) and Hourly Temp (2/5) */}
         <div className="flex flex-col lg:flex-row gap-6"> 
           <CurrentWeather data={weatherQuery.data} locationName={locationName} />
           <HourlyTemperature data={forecastQuery.data} />
         </div>
 
-        {/* Row 2: Forecast and Details */}
         <div className="grid gap-6 lg:grid-cols-3 items-start"> 
           <div className="lg:col-span-2 space-y-6">
             <WeatherForecast data={forecastQuery.data} />
+            
+            {/* Stacked Historical Chart and AQI */}
+            {historicalQuery.isLoading ? (
+              <Skeleton className="h-[300px] w-full rounded-xl" />
+            ) : (
+              historicalQuery.data && historicalQuery.data.length > 0 && (
+                <HistoricalChart data={historicalQuery.data} />
+              )
+            )}
             {aqiQuery.data && <AirQuality data={aqiQuery.data} locationName={aqiLocationName} />}
           </div>
           <WeatherDetails data={weatherQuery.data} />

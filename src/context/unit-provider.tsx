@@ -28,27 +28,30 @@ export function UnitProvider({
   children,
   defaultUnit = "metric",
   storageKey = "weather-unit",
-  ...props
 }: UnitProviderProps) {
   const [unit, setUnit] = useState<Unit>(
     () => (localStorage.getItem(storageKey) as Unit) || defaultUnit
   )
-  
-  const unitSymbol = unit === "metric" ? "°C" : "°F"
-  const windUnit = unit === "metric" ? "m/s" : "mph"
 
-  const value = {
+  // Explicitly type these so TypeScript knows they are the narrow literal union
+  const unitSymbol: UnitProviderState["unitSymbol"] =
+    unit === "metric" ? "°C" : "°F"
+
+  const windUnit: UnitProviderState["windUnit"] =
+    unit === "metric" ? "m/s" : "mph"
+
+  const value: UnitProviderState = {
     unit,
     setUnit: (newUnit: Unit) => {
       localStorage.setItem(storageKey, newUnit)
       setUnit(newUnit)
     },
     unitSymbol,
-    windUnit
+    windUnit,
   }
 
   return (
-    <UnitProviderContext.Provider {...props} value={value}>
+    <UnitProviderContext.Provider value={value}>
       {children}
     </UnitProviderContext.Provider>
   )
