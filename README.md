@@ -3,8 +3,6 @@
 
 A modern, responsive weather application built with React and TypeScript. Get real-time weather information, forecasts, air quality data, and historical weather trends for any location worldwide.
 
-![Weather Dashboard](https://via.placeholder.com/1200x600/1e293b/ffffff?text=Eximate+Weather+Dashboard)
-
 ## ✨ Features
 
 - 🌍 **Real-time Weather Data** - Current conditions, temperature, humidity, wind speed, and more
@@ -208,24 +206,6 @@ src/
 ├── App.tsx             # Main app component
 └── main.tsx            # Entry point
 ```
-
-## 🎨 Features Showcase
-
-### Dashboard View
-<<<<<<< HEAD
-![Dashboard](https://via.placeholder.com/1200x800/1e293b/ffffff?text=Weather+Dashboard+View)
-
-### City Details
-![City Page](https://via.placeholder.com/1200x800/1e293b/ffffff?text=City+Weather+Details)
-
-### Dark Mode
-![Dark Mode](https://via.placeholder.com/1200x800/0f172a/ffffff?text=Dark+Mode+View)
-=======
-<img width="500" height="600" alt="dashboard" src="https://github.com/user-attachments/assets/98f47924-b011-4e31-a3de-e01483c5e530" />
-
-### City Details
-<img width="500" height="600" alt="citypage" src="https://github.com/user-attachments/assets/4585c9c7-afb2-44cf-826f-22933c5374c4" />
->>>>>>> 8ff0a90c6cc30daf9fc521b5014de228efc7fdb1
 
 ## 🏗️ Build
 
