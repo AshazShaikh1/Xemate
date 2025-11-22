@@ -2,7 +2,7 @@
 
 A modern, responsive weather application built with React and TypeScript. Get real-time weather information, forecasts, air quality data, and historical weather trends for any location worldwide.
 
-293b/ffffff?text=Eximate+Weather+Dashboard)
+![Dashboard]<img width="100" height="100" alt="dashboard" src="https://github.com/user-attachments/assets/98f47924-b011-4e31-a3de-e01483c5e530" />
 
 ## ✨ Features
 
@@ -53,7 +53,7 @@ A modern, responsive weather application built with React and TypeScript. Get re
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/AshazShaikh1/Xemate/
    cd Eximate
    ```
 
@@ -161,14 +161,10 @@ src/
 ## 🎨 Features Showcase
 
 ### Dashboard View
-![Dashboard]<img width="1920" height="3012" alt="dashboard" src="https://github.com/user-attachments/assets/98f47924-b011-4e31-a3de-e01483c5e530" />
-()
+![Dashboard]<img width="100" height="100" alt="dashboard" src="https://github.com/user-attachments/assets/98f47924-b011-4e31-a3de-e01483c5e530" />
 
 ### City Details
-![City Page](https://via.placeholder.com/1200x800/1e293b/ffffff?text=City+Weather+Details)
-
-### Dark Mode
-![Dark Mode](https://via.placeholder.com/1200x800/0f172a/ffffff?text=Dark+Mode+View)
+![City Page]<img width="100" height="100" alt="citypage" src="https://github.com/user-attachments/assets/4585c9c7-afb2-44cf-826f-22933c5374c4" />
 
 ## 🏗️ Build
 
