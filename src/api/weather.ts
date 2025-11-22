@@ -1,5 +1,5 @@
 import { API_CONFIG } from "./config"
-import type { Coordinates, ForecastData, GeoCodingResponse, WeatherData } from "./types"
+import type { Coordinates, ForecastData, GeoCodingResponse, WeatherData, AirPollutionData } from "./types"
 
 class WeatherAPI {
   private createUrl(
@@ -17,7 +17,17 @@ class WeatherAPI {
     const response = await fetch(url)
 
     if (!response.ok) {
-      throw new Error(`Weather API Error: ${response.status} ${response.statusText}`)
+      // Improved error message to check the actual response text if available
+      let errorDetail = response.statusText;
+      try {
+        const errorJson = await response.json();
+        if (errorJson.message) {
+          errorDetail = errorJson.message;
+        }
+      } catch (e) {
+        // ignore JSON parsing errors, use statusText
+      }
+      throw new Error(`Weather API Error: ${response.status} - ${errorDetail}`)
     }
 
     const data = await response.json()
@@ -42,6 +52,15 @@ class WeatherAPI {
     })
 
     return this.fetchData<ForecastData>(url)
+  }
+
+  async getCurrentAirQuality({ lat, lon }: Coordinates): Promise<AirPollutionData> {
+    const url = this.createUrl(`${API_CONFIG.BASE_URL}/air_pollution`, {
+      lat: lat.toString(),
+      lon: lon.toString(),
+    })
+    
+    return this.fetchData<AirPollutionData>(url)
   }
 
   async reverseGeocode({ lat, lon }: Coordinates): Promise<GeoCodingResponse[]> {

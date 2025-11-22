@@ -3,9 +3,9 @@ import Header from './ui/header'
 
 const Layout = ({children}: PropsWithChildren) => {
   return (
-    <div className='bg-linear-to-br from-background to-muted'>
+    <div className='bg-background min-h-screen'>
       <Header />
-      <main className='min-h-screen container mx-auto px-4 py-8'>
+      <main className='max-w-6xl mx-auto px-4 py-8'>
       {children}
       </main>
       <footer className='border-t backdrop-blur py-12 supports-backdrop-filter:bg-background/60'>

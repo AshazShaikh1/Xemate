@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "./button";
 import { Loader2, X } from "lucide-react";
 import { toast } from "sonner";
+import { Card } from "./card"; // Import Card
 
-interface FavioriteCityTabletProps {
+interface FavoriteCityTabletProps {
   id: string;
   name: string;
   lat: number;
@@ -14,7 +15,8 @@ interface FavioriteCityTabletProps {
   onRemove: (id: string) => void;
 }
 
-const FavioriteCities = () => {
+// Renamed to use PascalCase for component name
+const FavoriteCities = () => { 
   const { favorites, removeFavorite } = useFavorite();
 
   if (!favorites || favorites.length === 0) {
@@ -22,32 +24,33 @@ const FavioriteCities = () => {
   }
 
   return (
-    <>
-      <h1 className="text-xl font-bold tracking-tight">Favorites</h1>
-      <ScrollArea className="w-full pb-4">
-        <div className="flex gap-4">
-          {favorites.map((city) => {
-            return (
-              <FavioriteCityTablet
-                key={city.id}
-                {...city}
-                onRemove={() => removeFavorite.mutate(city.id)}
-              />
-            );
-          })}
-        </div>
-      </ScrollArea>
-    </>
+    <Card className="p-0">
+        <h1 className="text-xl font-bold tracking-tight px-6 pt-6 border-b pb-4">Favorite Cities</h1>
+        {/* Use the shadcn ScrollArea component imported as ScrollArea */}
+        <ScrollArea className="w-full pb-4">
+            <div className="flex gap-4 p-6 overflow-x-auto">
+            {favorites.map((city) => {
+                return (
+                <FavoriteCityTablet
+                    key={city.id}
+                    {...city}
+                    onRemove={() => removeFavorite.mutate(city.id)}
+                />
+                );
+            })}
+            </div>
+        </ScrollArea>
+    </Card>
   );
 };
 
-function FavioriteCityTablet({
+function FavoriteCityTablet({
   id,
   name,
   lat,
   lon,
   onRemove,
-}: FavioriteCityTabletProps) {
+}: FavoriteCityTabletProps) {
   const navigate = useNavigate();
   const { data: weather, isLoading } = useWeatherQuery({ lat, lon });
 
@@ -56,12 +59,12 @@ function FavioriteCityTablet({
       onClick={() => navigate(`/city/${name}?lat=${lat}&lon=${lon}`)}
       role="button"
       tabIndex={0}
-      className="relative flex min-w-[250px] cursor-pointer items-center gap-3 rounded-lg border bg-card p-4 pr-8 shadow-sm transition-all hover:shadow-md"
+      className="relative flex min-w-[200px] cursor-pointer items-center gap-3 rounded-lg border bg-secondary/30 p-4 pr-8 shadow-sm transition-all hover:bg-secondary/70"
     >
       <Button
         variant="ghost"
-        size="icon"
-        className="absolute right-1 top-1 h-6 w-6 rounded-full p-0"
+        size="icon-sm"
+        className="absolute right-1 top-1 h-6 w-6 rounded-full p-0 hover:bg-destructive/10 text-muted-foreground hover:text-destructive"
         onClick={(e) => {
           e.stopPropagation();
           onRemove(id);
@@ -102,4 +105,4 @@ function FavioriteCityTablet({
   );
 }
 
-export default FavioriteCities;
+export default FavoriteCities;

@@ -1,6 +1,6 @@
 import type { WeatherData } from "@/api/types";
 import { format } from "date-fns";
-import { Compass, Gauge, Sunrise, Sunset } from "lucide-react";
+import { Compass, Gauge, Sunrise, Sunset, Droplets, Cloud, SunDim } from "lucide-react"; 
 import { Card, CardContent, CardHeader, CardTitle } from "./card";
 
 interface WeatherDetailsProps {
@@ -8,7 +8,7 @@ interface WeatherDetailsProps {
 }
 
 const WeatherDetails = ({ data }: WeatherDetailsProps) => {
-  const { wind, main, sys } = data;
+  const { wind, main, sys, visibility = 0, clouds = { all: 0 } } = data; 
 
   const formatTime = (timestamp: number) => {
     return format(new Date(timestamp * 1000), "h:mm a");
@@ -27,19 +27,19 @@ const WeatherDetails = ({ data }: WeatherDetailsProps) => {
       title: "Sunrise",
       value: formatTime(sys.sunrise),
       icon: Sunrise,
-      color: "text-orange-500",
+      color: "text-amber-500",
     },
     {
       title: "Sunset",
       value: formatTime(sys.sunset),
       icon: Sunset,
-      color: "text-blue-500",
+      color: "text-indigo-500",
     },
     {
       title: "Wind Direction",
       value: `${getWindDirection(wind.deg)} (${wind.deg}°)`,
       icon: Compass,
-      color: "text-green-500",
+      color: "text-cyan-500",
     },
     {
       title: "Pressure",
@@ -47,25 +47,43 @@ const WeatherDetails = ({ data }: WeatherDetailsProps) => {
       icon: Gauge,
       color: "text-purple-500",
     },
-  ];
+    {
+        title: "Humidity",
+        value: `${main.humidity}%`,
+        icon: Droplets,
+        color: "text-blue-500",
+    },
+    {
+        title: "Cloudiness",
+        value: `${clouds.all}%`,
+        icon: Cloud,
+        color: "text-gray-500",
+    },
+    {
+        title: "Visibility",
+        value: `${(visibility / 1000).toFixed(1)} km`, 
+        icon: SunDim,
+        color: "text-pink-500",
+    }
+  ].filter(d => d.value !== undefined); 
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Weather Details</CardTitle>
+    <Card className="flex-1">
+      <CardHeader className="border-b">
+        <CardTitle>Additional Details</CardTitle> 
       </CardHeader>
-      <CardContent>
-        <div className="grid gap-6 sm:grid-cols-2">
+      <CardContent className="pt-6">
+        <div className="grid gap-4 sm:grid-cols-2">
           {details.map((detail) => {
             return (
               <div
               key={detail.title}
-              className="flex items-center gap-3 rounded-lg border p-4"
+              className="flex items-center gap-4 p-3 rounded-lg bg-secondary/30"
               >
-                <detail.icon className={`h-5 w-5 ${detail.color}`} />
+                <detail.icon className={`h-5 w-5 shrink-0 ${detail.color}`} />
                 <div>
                   <p className="text-sm font-medium leading-none">{detail.title}</p>
-                  <p className="text-sm text-muted-foreground">{detail.value}</p>
+                  <p className="text-lg font-semibold text-foreground">{detail.value}</p> 
                 </div>
               </div>
             );

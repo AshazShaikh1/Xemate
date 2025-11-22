@@ -1,4 +1,4 @@
-import type { Coordinates } from "@/api/types"
+import type { Coordinates, AirPollutionData } from "@/api/types"
 import { weatherAPI } from "@/api/weather"
 import { useQuery } from "@tanstack/react-query"
 
@@ -7,6 +7,7 @@ export const WEATHER_KEYS = {
   forecast: (coords: Coordinates) => ["forecast", coords] as const,
   location: (coords: Coordinates) => ["location", coords] as const,
   search: (query: string) => ["location-search", query] as const,
+  aqi: (coords: Coordinates) => ["aqi", coords] as const,
 } as const
 
 export function useWeatherQuery(coordinates: Coordinates | null){
@@ -22,6 +23,15 @@ export function useForecastQuery(coordinates: Coordinates | null){
     queryKey: WEATHER_KEYS.forecast(coordinates??{lat: 0, lon: 0}),
     queryFn: () => coordinates?weatherAPI.getForecast(coordinates):null,
     enabled: !!coordinates,
+  })
+}
+
+export function useAqiQuery(coordinates: Coordinates | null){
+  return useQuery<AirPollutionData | null>({
+    queryKey: WEATHER_KEYS.aqi(coordinates??{lat: 0, lon: 0}),
+    queryFn: () => coordinates?weatherAPI.getCurrentAirQuality(coordinates):null,
+    enabled: !!coordinates,
+    staleTime: 5 * 60 * 1000, 
   })
 }
 

@@ -1,7 +1,8 @@
 import type { ForecastData } from "@/api/types";
 import { format } from "date-fns";
 import { Card, CardContent, CardHeader, CardTitle } from "./card";
-import { ArrowDown, ArrowUp, Droplet, Wind } from "lucide-react";
+import { ArrowDown, ArrowUp } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface WeatherForecastProps {
   data: ForecastData;
@@ -23,6 +24,10 @@ interface DailyForecast {
 
 const WeatherForecast = ({ data }: WeatherForecastProps) => {
   const dailyForcasts = data.list.reduce((acc, forecast) => {
+    // Exclude the current day's first entry from the forecast summary
+    const isToday = format(new Date(forecast.dt * 1000), "yyyy-MM-dd") === format(new Date(), "yyyy-MM-dd");
+    if (isToday) return acc;
+
     const date = format(new Date(forecast.dt * 1000), "yyyy-MM-dd");
 
     if (!acc[date]) {
@@ -42,54 +47,59 @@ const WeatherForecast = ({ data }: WeatherForecastProps) => {
     return acc;
   }, {} as Record<string, DailyForecast>);
 
-  const nextDays = Object.values(dailyForcasts).slice(0, 6);
+  // Take the next 5 days
+  const nextDays = Object.values(dailyForcasts).slice(0, 5);
   
   const formatTemp = (temp: number) => `${Math.round(temp)}°`
 
   return (
-    <Card>
-      <CardHeader>
+    <Card className="flex-1">
+      <CardHeader className="border-b">
         <CardTitle>5-Day Forecast</CardTitle>
       </CardHeader>
-      <CardContent>
-        <div>
-          <div className="grid gap-4">
-            {nextDays.map((day) => {
-              return <div
+      <CardContent className="pt-6">
+        <div className="grid gap-3">
+          {nextDays.map((day) => {
+            const dateObj = new Date(day.date * 1000);
+            return (
+              <div
                 key={day.date}
-                className="grid grid-cols-3 items-center gap-4 rounded-lg border p-4"
+                className={cn(
+                    "flex items-center justify-between rounded-lg p-3 transition-colors hover:bg-secondary/50 bg-secondary/30" // Applied bg-secondary/30 here
+                )}
               >
-                <div className="font-medium">
-                  <p>{format(new Date(day.date * 1000), "EEE, MMM d")}</p>
-                  <p className="text-sm text-muted-foreground capitalize">
+                {/* Day and Date */}
+                <div className="shrink-0 w-[120px]">
+                  <p className="font-medium">{format(dateObj, "EEE")}</p>
+                  <p className="text-sm text-muted-foreground">{format(dateObj, "MMM d")}</p>
+                </div>
+
+                {/* Weather Icon and Description */}
+                <div className="flex items-center gap-2 flex-1 min-w-0">
+                  <img
+                    src={`https://openweathermap.org/img/wn/${day.weather.icon}.png`}
+                    alt={day.weather.description}
+                    className="h-8 w-8 shrink-0"
+                  />
+                  <p className="text-sm capitalize truncate hidden sm:block">
                     {day.weather.description}
                   </p>
                 </div>
 
-                <div className="flex justify-center gap-4">
-                  <span className="flex items-center text-blue-500">
-                    <ArrowDown className="mr-1 h-4 w-4" />
+                {/* Min/Max Temperature */}
+                <div className="flex justify-end gap-3 shrink-0 w-[120px]">
+                  <span className="flex items-center text-blue-500 text-sm font-medium">
+                    <ArrowDown className="mr-1 h-3 w-3" />
                     {formatTemp (day.temp_min)}
                   </span>
-                  <span className="flex items-center text-red-500">
-                    <ArrowUp className="mr-1 h-4 w-4" />
+                  <span className="flex items-center text-red-500 text-sm font-medium">
+                    <ArrowUp className="mr-1 h-3 w-3" />
                     {formatTemp (day.temp_max)}
                   </span>
                 </div>
-
-                <div className="flex justify-end gap-4">
-                  <span className="flex items-center gap-1">
-                    <Droplet className="h-4 w-4 text-blue-500" />
-                    <span className="text-sm">{day.humidity}%</span>
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Wind className="h-4 w-4 text-blue-500" />
-                    <span className="text-sm">{day.wind}m/s</span>
-                  </span>
-                </div>
               </div>
-            })}
-          </div>
+            )
+          })}
         </div>
       </CardContent>
     </Card>

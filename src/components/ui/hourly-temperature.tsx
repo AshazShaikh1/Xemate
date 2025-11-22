@@ -15,24 +15,23 @@ const HourlyTemperature = ({ data }: HourlyTemperatureProps) => {
   }))
 
   return (
-    <Card className="flex-1">
-      <CardHeader>
-        <CardTitle>Today's Temperature</CardTitle>
+    <Card className="w-full lg:w-2/5"> 
+      <CardHeader className="border-b">
+        <CardTitle>Hourly Temperature</CardTitle> 
       </CardHeader>
-      <CardContent>
-        <div className="h-[200px] w-full">
+      <CardContent className="h-[250px] w-full pt-6"> 
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={chartData}>
               <XAxis
                 dataKey="time"
-                stroke="#888888"
+                stroke="var(--color-muted-foreground)" 
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
               />
               <YAxis
                 dataKey="temp"
-                stroke="#888888"
+                stroke="var(--color-muted-foreground)" 
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
@@ -42,16 +41,15 @@ const HourlyTemperature = ({ data }: HourlyTemperatureProps) => {
                 content={({ active, payload }) => {
                   if(active && payload && payload.length){
                     return (
-                      <div className="rounded-lg border bg-background p-2 shadow-sm">
-                        <div className="grid grid-cols-2 gap-2">
-                          <div className="flex flex-col">
-                            <span className="text-[0.7rem] uppercase text-muted-foreground">Temperature</span>
-                            <span className="font-bold">{payload[0].value}°</span>
-                          </div>
-                          <div className="flex flex-col">
-                            <span className="text-[0.7rem] uppercase text-muted-foreground">Feels Like</span>
-                            <span className="font-bold">{payload[1].value}°</span>
-                          </div>
+                      <div className="rounded-lg border bg-popover text-popover-foreground p-3 shadow-lg"> 
+                        <div className="flex flex-col gap-1">
+                            <span className="text-sm font-semibold">{payload[0].payload.time}</span>
+                            <div className="text-xs">
+                              <span className="font-medium" style={{color: "var(--color-chart-2)"}}>Temp:</span> <span className="font-bold">{payload[0].value}°</span>
+                            </div>
+                            <div className="text-xs">
+                              <span className="font-medium" style={{color: "var(--color-chart-4)"}}>Feels Like:</span> <span className="font-bold">{payload[1].value}°</span>
+                            </div>
                         </div>
                       </div>
                     )
@@ -63,21 +61,20 @@ const HourlyTemperature = ({ data }: HourlyTemperatureProps) => {
               <Line
                 type="monotone"
                 dataKey="temp"
-                stroke="#2563eb"
+                stroke="var(--color-chart-2)"
                 strokeWidth={2}
                 dot={false}
               />
               <Line
                 type="monotone"
                 dataKey="feels_like"
-                stroke="#64748b"
+                stroke="var(--color-chart-4)" 
                 strokeWidth={2}
                 dot={false}
-                strokeDasharray="5 5"
+                strokeDasharray="3 3" 
               />
             </LineChart>
           </ResponsiveContainer>
-        </div>
       </CardContent>
     </Card>
   )
