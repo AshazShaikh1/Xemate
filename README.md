@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🌤️ Eximate - Weather Dashboard
 
 A modern, responsive weather application built with React and TypeScript. Get real-time weather information, forecasts, air quality data, and historical weather trends for any location worldwide.
@@ -44,6 +45,52 @@ A modern, responsive weather application built with React and TypeScript. Get re
 
 ## 🚀 Getting Started
 
+=======
+# 🌤️ Klimate - Weather Dashboard
+
+A modern, responsive weather application built with React and TypeScript. Get real-time weather information, forecasts, air quality data, and historical weather trends for any location worldwide.
+
+## ✨ Features
+
+- 🌍 **Real-time Weather Data** - Current conditions, temperature, humidity, wind speed, and more
+- 📊 **5-Day Forecast** - Detailed weather predictions for the upcoming week
+- 📈 **Hourly Temperature Charts** - Visual representation of temperature trends
+- 📉 **Historical Data** - 7-day historical temperature analysis
+- 🌬️ **Air Quality Index** - Real-time AQI with pollutant breakdown
+- ⭐ **Favorite Cities** - Save and quickly access your favorite locations
+- 🔍 **City Search** - Search and navigate to any city worldwide
+- 🌓 **Dark/Light Mode** - Beautiful theme switching with smooth animations
+- 🌡️ **Unit Toggle** - Switch between Celsius and Fahrenheit
+- 📱 **Responsive Design** - Works seamlessly on desktop, tablet, and mobile devices
+- 🎨 **Modern UI/UX** - Smooth animations and micro-interactions
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **React 19** - Modern React with latest features
+- **TypeScript** - Type-safe development
+- **Vite** - Fast build tool and dev server
+- **Tailwind CSS 4** - Utility-first CSS framework
+- **React Router** - Client-side routing
+
+### State Management & Data Fetching
+- **TanStack Query (React Query)** - Server state management and data fetching
+- **React Context API** - Theme and unit preferences
+
+### UI Components
+- **Radix UI** - Accessible component primitives
+- **Lucide React** - Beautiful icon library
+- **Recharts** - Composable charting library
+- **Sonner** - Toast notifications
+
+### Utilities
+- **date-fns** - Date formatting and manipulation
+- **class-variance-authority** - Component variant management
+- **cmdk** - Command palette component
+
+## 🚀 Getting Started
+
+>>>>>>> 8ff0a90c6cc30daf9fc521b5014de228efc7fdb1
 ### Prerequisites
 
 - Node.js 18+ and npm/yarn/pnpm
@@ -53,7 +100,11 @@ A modern, responsive weather application built with React and TypeScript. Get re
 
 1. **Clone the repository**
    ```bash
+<<<<<<< HEAD
    git clone <repository-url>
+=======
+   git clone https://github.com/AshazShaikh1/Xemate/
+>>>>>>> 8ff0a90c6cc30daf9fc521b5014de228efc7fdb1
    cd Eximate
    ```
 
@@ -161,6 +212,7 @@ src/
 ## 🎨 Features Showcase
 
 ### Dashboard View
+<<<<<<< HEAD
 ![Dashboard](https://via.placeholder.com/1200x800/1e293b/ffffff?text=Weather+Dashboard+View)
 
 ### City Details
@@ -168,6 +220,12 @@ src/
 
 ### Dark Mode
 ![Dark Mode](https://via.placeholder.com/1200x800/0f172a/ffffff?text=Dark+Mode+View)
+=======
+<img width="500" height="600" alt="dashboard" src="https://github.com/user-attachments/assets/98f47924-b011-4e31-a3de-e01483c5e530" />
+
+### City Details
+<img width="500" height="600" alt="citypage" src="https://github.com/user-attachments/assets/4585c9c7-afb2-44cf-826f-22933c5374c4" />
+>>>>>>> 8ff0a90c6cc30daf9fc521b5014de228efc7fdb1
 
 ## 🏗️ Build
 
@@ -186,6 +244,7 @@ npm run build
 npm run preview
 ```
 
+<<<<<<< HEAD
 ## 🚀 Deployment
 
 ### Deploy to Vercel
@@ -244,6 +303,8 @@ Make sure to add the following environment variable in your Vercel project setti
 
 The app will automatically use these environment variables during build time.
 
+=======
+>>>>>>> 8ff0a90c6cc30daf9fc521b5014de228efc7fdb1
 ## 🧪 Scripts
 
 - `npm run dev` - Start development server
