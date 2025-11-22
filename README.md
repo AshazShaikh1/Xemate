@@ -1,4 +1,4 @@
-# 🌤️ Eximate - Weather Dashboard
+# 🌤️ Klimate - Weather Dashboard
 
 A modern, responsive weather application built with React and TypeScript. Get real-time weather information, forecasts, air quality data, and historical weather trends for any location worldwide.
 
