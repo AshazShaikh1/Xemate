@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { Card, CardContent, CardHeader, CardTitle } from "./card";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useUnit } from "@/context/unit-provider"; // New import
 
 interface WeatherForecastProps {
   data: ForecastData;
@@ -23,6 +24,8 @@ interface DailyForecast {
 }
 
 const WeatherForecast = ({ data }: WeatherForecastProps) => {
+  const { unitSymbol } = useUnit(); // Get unitSymbol
+
   const dailyForcasts = data.list.reduce((acc, forecast) => {
     // Exclude the current day's first entry from the forecast summary
     const isToday = format(new Date(forecast.dt * 1000), "yyyy-MM-dd") === format(new Date(), "yyyy-MM-dd");
@@ -50,7 +53,7 @@ const WeatherForecast = ({ data }: WeatherForecastProps) => {
   // Take the next 5 days
   const nextDays = Object.values(dailyForcasts).slice(0, 5);
   
-  const formatTemp = (temp: number) => `${Math.round(temp)}°`
+  const formatTemp = (temp: number) => `${Math.round(temp)}${unitSymbol}` // Use dynamic unitSymbol
 
   return (
     <Card className="flex-1">

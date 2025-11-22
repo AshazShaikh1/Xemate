@@ -2,12 +2,15 @@ import type { ForecastData } from "@/api/types"
 import { Card, CardContent, CardHeader, CardTitle } from "./card";
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts"
 import { format } from "date-fns"
+import { useUnit } from "@/context/unit-provider"; // New import
 
 interface HourlyTemperatureProps {
   data: ForecastData;
 }
 
 const HourlyTemperature = ({ data }: HourlyTemperatureProps) => {
+  const { unitSymbol } = useUnit(); // Get unitSymbol
+
   const chartData = data.list.slice(0, 8).map((item) => ({
     time: format(new Date(item.dt * 1000), "ha"),
     temp: Math.round(item.main.temp),
@@ -35,7 +38,7 @@ const HourlyTemperature = ({ data }: HourlyTemperatureProps) => {
                 fontSize={12}
                 tickLine={false}
                 axisLine={false}
-                tickFormatter={(value: number) => `${value}°`}
+                tickFormatter={(value: number) => `${value}${unitSymbol}`} // Use dynamic unitSymbol
               />
               <Tooltip
                 content={({ active, payload }) => {
@@ -45,10 +48,10 @@ const HourlyTemperature = ({ data }: HourlyTemperatureProps) => {
                         <div className="flex flex-col gap-1">
                             <span className="text-sm font-semibold">{payload[0].payload.time}</span>
                             <div className="text-xs">
-                              <span className="font-medium" style={{color: "var(--color-chart-2)"}}>Temp:</span> <span className="font-bold">{payload[0].value}°</span>
+                              <span className="font-medium" style={{color: "var(--color-chart-2)"}}>Temp:</span> <span className="font-bold">{payload[0].value}{unitSymbol}</span> {/* Use dynamic unitSymbol */}
                             </div>
                             <div className="text-xs">
-                              <span className="font-medium" style={{color: "var(--color-chart-4)"}}>Feels Like:</span> <span className="font-bold">{payload[1].value}°</span>
+                              <span className="font-medium" style={{color: "var(--color-chart-4)"}}>Feels Like:</span> <span className="font-bold">{payload[1].value}{unitSymbol}</span> {/* Use dynamic unitSymbol */}
                             </div>
                         </div>
                       </div>

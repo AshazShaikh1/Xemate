@@ -1,5 +1,6 @@
 import { API_CONFIG } from "./config"
 import type { Coordinates, ForecastData, GeoCodingResponse, WeatherData, AirPollutionData } from "./types"
+import type { Unit } from "@/context/unit-provider" //from "./types"
 
 class WeatherAPI {
   private createUrl(
@@ -34,21 +35,27 @@ class WeatherAPI {
     return data as T
   }
 
-  async getCurrentWeather({ lat, lon }: Coordinates): Promise<WeatherData> {
+  async getCurrentWeather(
+    { lat, lon }: Coordinates,
+    unit: Unit // Added unit parameter
+  ): Promise<WeatherData> {
     const url = this.createUrl(`${API_CONFIG.BASE_URL}/weather`, {
       lat: lat.toString(),
       lon: lon.toString(),
-      units: String(API_CONFIG.DEFAULT_PARAMS.units)
+      units: unit, // Use dynamic unit
     })
 
     return this.fetchData<WeatherData>(url)
   }
 
-  async getForecast({ lat, lon }: Coordinates): Promise<ForecastData> {
+  async getForecast(
+    { lat, lon }: Coordinates,
+    unit: Unit // Added unit parameter
+  ): Promise<ForecastData> {
     const url = this.createUrl(`${API_CONFIG.BASE_URL}/forecast`, {
       lat: lat.toString(),
       lon: lon.toString(),
-      units: String(API_CONFIG.DEFAULT_PARAMS.units)
+      units: unit, // Use dynamic unit
     })
 
     return this.fetchData<ForecastData>(url)

@@ -1,14 +1,16 @@
 import type { WeatherData } from "@/api/types";
 import { format } from "date-fns";
-import { Compass, Gauge, Sunrise, Sunset, Droplets, Cloud, SunDim } from "lucide-react"; 
+import { Compass, Gauge, Sunrise, Sunset, Droplets, Cloud, SunDim, Wind } from "lucide-react"; 
 import { Card, CardContent, CardHeader, CardTitle } from "./card";
+import { useUnit } from "@/context/unit-provider"; // New import
 
 interface WeatherDetailsProps {
   data: WeatherData;
 }
 
 const WeatherDetails = ({ data }: WeatherDetailsProps) => {
-  const { wind, main, sys, visibility = 0, clouds = { all: 0 } } = data; 
+  const { windUnit } = useUnit(); // Get windUnit
+  const { wind, main, sys, visibility = 0, clouds = { all: 0 } } = data;
 
   const formatTime = (timestamp: number) => {
     return format(new Date(timestamp * 1000), "h:mm a");
@@ -60,12 +62,18 @@ const WeatherDetails = ({ data }: WeatherDetailsProps) => {
         color: "text-gray-500",
     },
     {
+        title: "Wind Speed", // New wind speed detail (optional, since already in CurrentWeather)
+        value: `${wind.speed} ${windUnit}`, // Use dynamic windUnit
+        icon: Wind,
+        color: "text-cyan-500",
+    },
+    {
         title: "Visibility",
-        value: `${(visibility / 1000).toFixed(1)} km`, 
+        value: `${(visibility / 1000).toFixed(1)} km`, // Keeping in km as the base unit is meters
         icon: SunDim,
         color: "text-pink-500",
     }
-  ].filter(d => d.value !== undefined); 
+  ].filter(d => d.value !== undefined);
 
   return (
     <Card className="flex-1">

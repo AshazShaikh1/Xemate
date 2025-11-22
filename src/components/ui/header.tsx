@@ -2,6 +2,7 @@ import { useTheme } from "@/context/theme-provider"
 import { Sun, Moon } from "lucide-react"
 import { Link } from "react-router-dom"
 import CitySearch from "./city-search"
+import UnitToggle from "./unit-toggle" // New import
 
 const Header = () => {
   const { theme, setTheme } = useTheme()
@@ -15,7 +16,8 @@ const Header = () => {
 
         <div className="flex gap-4">
           <CitySearch />
-
+          <UnitToggle /> {/* Added Unit Toggle */}
+          
           <div onClick={() => setTheme(isDark ? "light" : "dark")} className={`flex items-center cursor-pointer transition-transform duration-500 ${isDark?"rotate-180":"rotate-0"}`}>
             {isDark ? (
               <Sun className="h-6 w-6 text-yellow-500 rotate-0 transition-all" />

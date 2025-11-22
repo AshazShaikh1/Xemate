@@ -1,6 +1,7 @@
 import type { GeoCodingResponse, WeatherData } from "@/api/types"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./ui/card";
 import { ArrowDown, ArrowUp, Droplets, Wind, Thermometer } from "lucide-react";
+import { useUnit } from "@/context/unit-provider"; // New import
 
 interface CurrentWeatherProps {
   data: WeatherData,
@@ -8,6 +9,7 @@ interface CurrentWeatherProps {
 }
 
 const CurrentWeather = ({ data, locationName }: CurrentWeatherProps) => {
+  const { unitSymbol, windUnit } = useUnit(); // Get unit details
 
   const {
     weather: [currentWeather],
@@ -15,7 +17,7 @@ const CurrentWeather = ({ data, locationName }: CurrentWeatherProps) => {
     wind: { speed },
   } = data;
 
-  const formatTemp = (temp: number) => `${Math.round(temp)}°`
+  const formatTemp = (temp: number) => `${Math.round(temp)}${unitSymbol}` // Use dynamic unitSymbol
 
   return (
     <Card className="overflow-hidden p-0 w-full lg:w-3/5">
@@ -85,7 +87,8 @@ const CurrentWeather = ({ data, locationName }: CurrentWeatherProps) => {
               <Wind className="h-4 w-4 text-cyan-500" />
               <div>
                 <p className="text-sm font-medium">Wind Speed</p>
-                <p className="text-sm text-muted-foreground">{speed} m/s</p>
+                {/* Use dynamic windUnit */}
+                <p className="text-sm text-muted-foreground">{speed} {windUnit}</p> 
               </div>
             </div>
           </div>

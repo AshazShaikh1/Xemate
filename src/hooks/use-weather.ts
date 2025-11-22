@@ -1,27 +1,30 @@
 import type { Coordinates, AirPollutionData } from "@/api/types"
 import { weatherAPI } from "@/api/weather"
 import { useQuery } from "@tanstack/react-query"
+import { useUnit } from "@/context/unit-provider" // Import useUnit
 
 export const WEATHER_KEYS = {
-  weather: (coords: Coordinates) => ["weather", coords] as const,
-  forecast: (coords: Coordinates) => ["forecast", coords] as const,
+  weather: (coords: Coordinates, unit: string) => ["weather", coords, unit] as const, // Added unit to key
+  forecast: (coords: Coordinates, unit: string) => ["forecast", coords, unit] as const, // Added unit to key
   location: (coords: Coordinates) => ["location", coords] as const,
   search: (query: string) => ["location-search", query] as const,
   aqi: (coords: Coordinates) => ["aqi", coords] as const,
 } as const
 
 export function useWeatherQuery(coordinates: Coordinates | null){
+  const { unit } = useUnit() // Get unit from context
   return useQuery({
-    queryKey: WEATHER_KEYS.weather(coordinates??{lat: 0, lon: 0}),
-    queryFn: () => coordinates?weatherAPI.getCurrentWeather(coordinates):null,
+    queryKey: WEATHER_KEYS.weather(coordinates??{lat: 0, lon: 0}, unit), // Use unit in key
+    queryFn: () => coordinates?weatherAPI.getCurrentWeather(coordinates, unit):null, // Pass unit to API
     enabled: !!coordinates,
   })
 }
 
 export function useForecastQuery(coordinates: Coordinates | null){
+  const { unit } = useUnit() // Get unit from context
   return useQuery({
-    queryKey: WEATHER_KEYS.forecast(coordinates??{lat: 0, lon: 0}),
-    queryFn: () => coordinates?weatherAPI.getForecast(coordinates):null,
+    queryKey: WEATHER_KEYS.forecast(coordinates??{lat: 0, lon: 0}, unit), // Use unit in key
+    queryFn: () => coordinates?weatherAPI.getForecast(coordinates, unit):null, // Pass unit to API
     enabled: !!coordinates,
   })
 }
