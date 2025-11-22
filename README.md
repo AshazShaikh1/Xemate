@@ -2,8 +2,6 @@
 
 A modern, responsive weather application built with React and TypeScript. Get real-time weather information, forecasts, air quality data, and historical weather trends for any location worldwide.
 
-![Dashboard]<img width="500" height="600" alt="dashboard" src="https://github.com/user-attachments/assets/98f47924-b011-4e31-a3de-e01483c5e530" />
-
 ## ✨ Features
 
 - 🌍 **Real-time Weather Data** - Current conditions, temperature, humidity, wind speed, and more
@@ -161,10 +159,10 @@ src/
 ## 🎨 Features Showcase
 
 ### Dashboard View
-![Dashboard]<img width="100" height="100" alt="dashboard" src="https://github.com/user-attachments/assets/98f47924-b011-4e31-a3de-e01483c5e530" />
+<img width="500" height="600" alt="dashboard" src="https://github.com/user-attachments/assets/98f47924-b011-4e31-a3de-e01483c5e530" />
 
 ### City Details
-![City Page]<img width="100" height="100" alt="citypage" src="https://github.com/user-attachments/assets/4585c9c7-afb2-44cf-826f-22933c5374c4" />
+<img width="500" height="600" alt="citypage" src="https://github.com/user-attachments/assets/4585c9c7-afb2-44cf-826f-22933c5374c4" />
 
 ## 🏗️ Build
 
