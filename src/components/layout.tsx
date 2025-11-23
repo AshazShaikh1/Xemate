@@ -4,7 +4,7 @@ import Header from "./ui/header";
 const Layout = ({ children }: PropsWithChildren) => {
   return (
     <div className="bg-background min-h-screen relative overflow-x-hidden">
-      <div className="fixed inset-0 -z-10 bg-gradient-to-br from-background via-background to-muted/20 dark:from-background dark:via-background dark:to-muted/10" />
+      <div className="fixed inset-0 -z-10 bg-linear-to-br from-background via-background to-muted/20 dark:from-background dark:via-background dark:to-muted/10" />
       <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.05),transparent_50%)] dark:bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.03),transparent_50%)]" />
 
       <Header />
